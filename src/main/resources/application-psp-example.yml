@@ -1,0 +1,99 @@
+# Firefly PSP Library - Example Configuration
+# Copy this file to your microservice's application.yml and adjust values
+
+firefly:
+  psp:
+    # PSP provider selection (stripe, adyen, paypal, etc.)
+    provider: stripe
+    
+    # Base path for PSP REST controllers (optional)
+    base-path: /api/psp
+    
+    # Resilience configuration
+    resilience:
+      enabled: true
+      
+      # Circuit Breaker settings
+      circuit-breaker:
+        failure-rate-threshold: 50              # Open circuit at 50% failure rate
+        minimum-number-of-calls: 10             # Min calls before calculating failure rate
+        wait-duration-in-open-state: 60s        # Wait 60s before trying half-open
+        permitted-number-of-calls-in-half-open-state: 5
+        sliding-window-size: 100                # Track last 100 calls
+        slow-call-duration-threshold: 10s       # Calls >10s are "slow"
+        slow-call-rate-threshold: 100           # 100% = disabled (only count failures)
+      
+      # Rate Limiter settings (per PSP instance)
+      rate-limiter:
+        limit-refresh-period: 1s                # Refresh limits every second
+        limit-for-period: 50                    # Allow 50 calls per second
+        timeout-duration: 5s                    # Wait max 5s for permission
+      
+      # Retry settings
+      retry:
+        max-attempts: 3                         # Retry up to 3 times
+        wait-duration: 1s                       # Wait 1s between retries
+        exponential-backoff-enabled: true       # Enable exponential backoff
+        exponential-backoff-multiplier: 2.0     # Double wait time each retry
+        exponential-max-wait-duration: 10s      # Cap at 10s wait time
+      
+      # Bulkhead settings (concurrency limits)
+      bulkhead:
+        max-concurrent-calls: 25                # Max 25 concurrent PSP calls
+        max-wait-duration: 500ms                # Wait max 500ms for slot
+      
+      # Time Limiter settings
+      time-limiter:
+        timeout-duration: 30s                   # Timeout PSP calls after 30s
+        cancel-running-future: true             # Cancel on timeout
+
+# Spring Boot Actuator (for health checks and metrics)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        "[psp.operation]": true
+    tags:
+      application: ${spring.application.name}
+      environment: ${spring.profiles.active}
+
+# Logging
+logging:
+  level:
+    com.firefly.psps: DEBUG
+    io.github.resilience4j: INFO
+    
+# Example: Multi-PSP Configuration (advanced)
+# Use this when you need multiple PSP providers
+#firefly:
+#  psp:
+#    providers:
+#      stripe:
+#        api-key: ${STRIPE_API_KEY}
+#        webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+#        resilience:
+#          rate-limiter:
+#            limit-for-period: 100      # Stripe allows 100 req/s
+#      adyen:
+#        api-key: ${ADYEN_API_KEY}
+#        webhook-secret: ${ADYEN_WEBHOOK_SECRET}
+#        resilience:
+#          rate-limiter:
+#            limit-for-period: 50       # Adyen allows 50 req/s
+#    routing:
+#      strategy: COST_OPTIMIZED         # or CURRENCY_OPTIMIZED, REGION_BASED, etc.
+#      default-provider: stripe
+#      failover-enabled: true
+#      failover-order:
+#        - stripe
+#        - adyen
