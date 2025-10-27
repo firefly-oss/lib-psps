@@ -44,6 +44,18 @@ The `lib-psps` library provides a unified, type-safe interface for integrating w
 - **Reconciliation** - Settlement reports, discrepancy detection
 - **Multi-tenancy** - Tenant-isolated configurations
 
+## Prerequisites
+
+Before using this library, ensure you have:
+
+- **Java 21** or later
+- **Spring Boot 3.x** application
+- **Maven** or **Gradle** for dependency management
+- Basic understanding of:
+  - Reactive programming (Project Reactor)
+  - Hexagonal architecture principles
+  - Payment processing concepts
+
 ## Quick Start
 
 ### 1. Add Dependency
@@ -299,9 +311,90 @@ Copyright 2025 Firefly Software Solutions Inc
 
 Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
 
+## Frequently Asked Questions
+
+### Q: How do I handle webhooks?
+**A:** Webhook handling is intentionally separated and managed by `common-platform-webhooks-mgmt`. This provides:
+- Centralized webhook management
+- Signature verification
+- Replay attack protection
+- Event routing
+
+### Q: Can I use multiple PSPs simultaneously?
+**A:** Yes! Use the `PspRouter` service to implement:
+- Automatic failover between PSPs
+- Cost-optimized routing (lowest fees)
+- Currency-optimized routing
+- Region-based routing
+
+### Q: How do I test my PSP implementation?
+**A:** The library provides test utilities:
+1. Use the test suites as examples
+2. Mock the `PspAdapter` interface
+3. Test each port independently
+4. Use PSP sandbox/test environments
+
+### Q: What about PCI-DSS compliance?
+**A:** The library includes:
+- Automatic sensitive data masking
+- Audit logging
+- No storage of card data (use tokens)
+- Compliance validation utilities
+
+### Q: How do I migrate from direct PSP integration?
+**A:** Follow these steps:
+1. Add lib-psps dependency
+2. Create adapter implementation for your current PSP
+3. Replace direct API calls with port method calls
+4. Test thoroughly in staging
+5. Deploy gradually with feature flags
+
+### Q: What's the performance overhead?
+**A:** Minimal:
+- Reactive/non-blocking design
+- No unnecessary object creation
+- Efficient port abstraction
+- Optional caching can be added
+
+## Troubleshooting
+
+### Build Issues
+
+**Problem**: `ClassNotFoundException` for Resilience4j classes  
+**Solution**: Ensure all Resilience4j dependencies are in your `pom.xml`. The parent POM should handle versions.
+
+**Problem**: Javadoc warnings about missing @param  
+**Solution**: This is normal for records. The library configures `doclint` to suppress these.
+
+### Runtime Issues
+
+**Problem**: Circuit breaker opens immediately  
+**Solution**: Check your `failure-rate-threshold` and `minimum-number-of-calls` configuration. Default is 50% after 10 calls.
+
+**Problem**: "No qualifying bean of type 'PspAdapter'"  
+**Solution**: Ensure you have a PSP implementation dependency (e.g., `lib-psps-stripe-impl`) in your runtime classpath.
+
+**Problem**: Mono/Flux never completes  
+**Solution**: 
+- Ensure you're subscribing to the Mono/Flux
+- Check for blocking operations in reactive chains
+- Verify timeout configuration (default: 30s)
+
+### Integration Issues
+
+**Problem**: PSP returns 401 Unauthorized  
+**Solution**: 
+- Verify API keys are correct
+- Check if keys are for the right environment (sandbox vs. production)
+- Ensure keys are properly configured in application properties
+
+**Problem**: Payments succeed but webhooks don't arrive  
+**Solution**: Remember, webhooks are handled by `common-platform-webhooks-mgmt`, not this library.
+
 ## Support
 
 For questions or issues:
 - **Documentation**: See `docs/` folder
 - **Architecture**: Review hexagonal design patterns
 - **Implementation**: Follow the implementation guide
+- **Issues**: Check the troubleshooting section above
