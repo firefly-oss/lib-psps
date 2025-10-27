@@ -91,18 +91,18 @@ firefly:
 
 The library defines 9 port interfaces representing all PSP operations:
 
-|| Port | Purpose | Methods |
+| Port | Purpose | Methods |
 |------|---------|---------|
-|| **PaymentPort** | Direct payment processing | 7 |
-|| **RefundPort** | Refund management | 5 |
-|| **PayoutPort** | Fund transfers | 5 |
-|| **CustomerPort** | Customer & payment method management | 9 |
-|| **SubscriptionPort** | Recurring billing | 16 |
-|| **CheckoutPort** | Hosted checkout & payment intents | 7 |
-|| **DisputePort** | Chargeback handling | 5 |
-|| **ProviderSpecificPort** | Custom PSP operations | 4 |
-|| **ReconciliationPort** | Settlement reconciliation | 5 |
-|| **PspAdapter** | Main entry point | 9 ports |
+| **PaymentPort** | Direct payment processing | 7 |
+| **RefundPort** | Refund management | 5 |
+| **PayoutPort** | Fund transfers | 5 |
+| **CustomerPort** | Customer & payment method management | 9 |
+| **SubscriptionPort** | Recurring billing | 16 |
+| **CheckoutPort** | Hosted checkout & payment intents | 7 |
+| **DisputePort** | Chargeback handling | 5 |
+| **ProviderSpecificPort** | Custom PSP operations | 4 |
+| **ReconciliationPort** | Settlement reconciliation | 5 |
+| **PspAdapter** | Main entry point | 9 ports |
 
 **Note:** Webhook handling is managed by `common-platform-webhooks-mgmt`.
 
