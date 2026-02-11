@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-This guide helps you diagnose and fix common issues when using the `lib-psps` library.
+This guide helps you diagnose and fix common issues when using the `library-psps` library.
 
 ---
 
@@ -79,7 +79,7 @@ error: cannot find symbol PspAdapter
 ```xml
 <dependency>
     <groupId>com.firefly</groupId>
-    <artifactId>lib-psps</artifactId>
+    <artifactId>library-psps</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -108,7 +108,7 @@ NoSuchBeanDefinitionException: No qualifying bean of type 'PspAdapter'
 ```xml
 <dependency>
     <groupId>com.firefly</groupId>
-    <artifactId>lib-psps-stripe-impl</artifactId>
+    <artifactId>library-psps-stripe-impl</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <scope>runtime</scope>
 </dependency>
@@ -422,7 +422,7 @@ pspAdapter.payments().createPayment(request);  // ✅ Works
 
 **Architecture**:
 ```
-Your App ──API calls──> lib-psps ──> PSP
+Your App ──API calls──> library-psps ──> PSP
                                       │
 PSP ──webhooks──> webhooks-mgmt ──events──> Your App
 ```

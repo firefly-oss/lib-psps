@@ -1,6 +1,6 @@
 # Migration Guide
 
-This guide helps you migrate from direct Payment Service Provider (PSP) integrations to the `lib-psps` abstraction library.
+This guide helps you migrate from direct Payment Service Provider (PSP) integrations to the `library-psps` abstraction library.
 
 ---
 
@@ -23,7 +23,7 @@ This guide helps you migrate from direct Payment Service Provider (PSP) integrat
 
 ## Why Migrate?
 
-### Benefits of lib-psps
+### Benefits of library-psps
 
 - **PSP Independence**: Switch payment providers without code changes
 - **Cost Optimization**: Automatic routing to lowest-cost provider
@@ -47,7 +47,7 @@ This guide helps you migrate from direct Payment Service Provider (PSP) integrat
 
 ### Compatibility Matrix
 
-| Your Current Stack | lib-psps Support | Notes |
+| Your Current Stack | library-psps Support | Notes |
 |--------------------|------------------|-------|
 | Stripe SDK v20+   | ✅ Full          | Direct mapping |
 | Adyen SDK v16+    | ✅ Full          | Direct mapping |
@@ -98,10 +98,10 @@ public class OldPaymentService {
 }
 ```
 
-#### After (lib-psps)
+#### After (library-psps)
 
 ```java
-// New code using lib-psps
+// New code using library-psps
 @Service
 public class PaymentService {
     
@@ -193,7 +193,7 @@ public class OldAdyenService {
 }
 ```
 
-#### After (lib-psps)
+#### After (library-psps)
 
 ```java
 @Service
@@ -278,7 +278,7 @@ public class OldPayPalService {
 }
 ```
 
-#### After (lib-psps)
+#### After (library-psps)
 
 ```java
 @Service
@@ -394,7 +394,7 @@ public class CustomPaymentOperations implements PaymentOperations {
 <!-- pom.xml -->
 <dependency>
     <groupId>com.firefly</groupId>
-    <artifactId>lib-psps</artifactId>
+    <artifactId>library-psps</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -414,14 +414,14 @@ firefly:
 
 ```yaml
 features:
-  use-lib-psps: false  # Start with false
+  use-library-psps: false  # Start with false
 ```
 
 ```java
 @Service
 public class PaymentService {
     
-    @Value("${features.use-lib-psps}")
+    @Value("${features.use-library-psps}")
     private boolean useLibPsps;
     
     @Autowired(required = false)
@@ -513,7 +513,7 @@ Use percentage-based rollout:
 @Service
 public class CanaryPaymentService {
     
-    @Value("${features.lib-psps-percentage}")
+    @Value("${features.library-psps-percentage}")
     private int libPspsPercentage;  // Start with 5%, gradually increase
     
     public Mono<PaymentResponse> createPayment(CreatePaymentRequest request) {
@@ -525,7 +525,7 @@ public class CanaryPaymentService {
                 .map(ResponseEntity::getBody)
                 .doOnError(error -> {
                     // Alert on errors
-                    alerting.sendAlert("lib-psps migration error", error);
+                    alerting.sendAlert("library-psps migration error", error);
                 });
         } else {
             metricsService.increment("payment.old_service.used");
@@ -569,7 +569,7 @@ Clean up configuration:
 # stripe:
 #   api-key: ...
 
-# Keep only lib-psps config
+# Keep only library-psps config
 firefly:
   psp:
     provider: stripe
@@ -734,7 +734,7 @@ If issues arise, quickly revert:
 **1. Feature Flag Rollback**
 ```yaml
 features:
-  use-lib-psps: false  # Disable immediately
+  use-library-psps: false  # Disable immediately
 ```
 
 **2. Configuration Rollback**
@@ -743,7 +743,7 @@ features:
 stripe:
   api-key: ${STRIPE_API_KEY}
 
-# Disable lib-psps
+# Disable library-psps
 # firefly:
 #   psp:
 #     provider: stripe
@@ -762,7 +762,7 @@ public class PaymentService {
     @Autowired
     private LegacyPaymentService legacyService;
     
-    @Value("${features.use-lib-psps:false}")
+    @Value("${features.use-library-psps:false}")
     private boolean useLibPsps;
     
     public Mono<PaymentResponse> createPayment(CreatePaymentRequest request) {
@@ -771,7 +771,7 @@ public class PaymentService {
                 .map(ResponseEntity::getBody)
                 .onErrorResume(error -> {
                     // Automatic fallback on error
-                    log.error("lib-psps failed, falling back to legacy", error);
+                    log.error("library-psps failed, falling back to legacy", error);
                     return Mono.fromCallable(() -> legacyService.createPayment(request));
                 });
         }
@@ -873,7 +873,7 @@ if (pspAdapter.getProviderName().equals("stripe")) {
 ```
 
 **Q: What about existing payment data?**  
-A: No migration needed! Only new payments use lib-psps.
+A: No migration needed! Only new payments use library-psps.
 
 **Q: Can I test without a real PSP?**  
 A: Yes! Use the mock adapter:
@@ -892,8 +892,8 @@ A: Typically 6-8 weeks for full rollout, 2-3 weeks for simple cases.
 
 - **Documentation**: [/docs/README.md](README.md)
 - **Examples**: [/examples](../examples)
-- **Issues**: [GitHub Issues](https://github.com/firefly/lib-psps/issues)
-- **Slack**: #lib-psps-support
+- **Issues**: [GitHub Issues](https://github.com/firefly/library-psps/issues)
+- **Slack**: #library-psps-support
 
 ---
 

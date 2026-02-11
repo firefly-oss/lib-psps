@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document explains how microservices should implement PSP integrations using the `lib-psps` library. The library provides a complete abstraction layer that requires minimal code from implementations.
+This document explains how microservices should implement PSP integrations using the `library-psps` library. The library provides a complete abstraction layer that requires minimal code from implementations.
 
 ---
 
@@ -10,7 +10,7 @@ This document explains how microservices should implement PSP integrations using
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│          YOUR MICROSERVICE (e.g., lib-psps-stripe-impl)    │
+│          YOUR MICROSERVICE (e.g., library-psps-stripe-impl)    │
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  1. EXTEND AbstractPspService (1 class, ~3 lines)          │
@@ -34,7 +34,7 @@ This document explains how microservices should implement PSP integrations using
 │     ├─ StripeProviderSpecificPort extends AbstractProviderSpecificPort
 │     └─ StripeReconciliationPort implements ReconciliationPort
 │                                                              │
-│  4. CREATE Mappers (convert between lib-psps DTOs and       │
+│  4. CREATE Mappers (convert between library-psps DTOs and       │
 │                      provider-specific DTOs)                 │
 │                                                              │
 │  5. CONFIGURE Spring Boot Auto-Configuration                │
@@ -44,7 +44,7 @@ This document explains how microservices should implement PSP integrations using
                            │ Uses
                            ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                    lib-psps (CORE LIBRARY)                  │
+│                    library-psps (CORE LIBRARY)                  │
 ├─────────────────────────────────────────────────────────────┤
 │  • 9 Port Interfaces (62+ methods)                          │
 │  • 5 Abstract Controllers (22 REST endpoints)                │
@@ -284,13 +284,13 @@ public class StripePaymentPort implements PaymentPort {
     @Override
     public Mono<ResponseEntity<PaymentResponse>> createPayment(CreatePaymentRequest request) {
         return Mono.fromCallable(() -> {
-            // 1. Convert lib-psps DTO to Stripe DTO
+            // 1. Convert library-psps DTO to Stripe DTO
             var stripeParams = mapper.toStripePaymentIntentParams(request);
             
             // 2. Call Stripe API
             PaymentIntent stripePayment = PaymentIntent.create(stripeParams);
             
-            // 3. Convert Stripe response to lib-psps DTO
+            // 3. Convert Stripe response to library-psps DTO
             PaymentResponse response = mapper.toPaymentResponse(stripePayment);
             
             return ResponseEntity.ok(response);
@@ -336,7 +336,7 @@ public class StripePaymentPort implements PaymentPort {
 
 ### Step 4: Create Mappers
 
-Create mapper classes to convert between lib-psps DTOs and provider-specific DTOs:
+Create mapper classes to convert between library-psps DTOs and provider-specific DTOs:
 
 ```java
 package com.firefly.psps.stripe.mappers;
@@ -595,7 +595,7 @@ class StripePaymentPortTest {
 
 1. **Extend, Don't Rewrite**: Inherit from abstract classes to get functionality for free
 2. **Implement Ports Only**: Focus your effort on PSP-specific integration logic
-3. **Map DTOs**: Convert between lib-psps DTOs and provider DTOs
+3. **Map DTOs**: Convert between library-psps DTOs and provider DTOs
 4. **Configure**: Let Spring Boot wire everything together
 5. **Test**: Write integration tests for your port implementations
 
@@ -603,7 +603,7 @@ class StripePaymentPortTest {
 
 ## Next Steps
 
-1. Clone the template: `lib-psps-{provider}-impl`
+1. Clone the template: `library-psps-{provider}-impl`
 2. Implement the 9 port interfaces
 3. Create mappers for DTO conversions
 4. Extend the abstract service and controllers

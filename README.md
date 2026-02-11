@@ -8,7 +8,7 @@ A complete Payment Service Provider (PSP) abstraction library for the Firefly pl
 
 ## Overview
 
-The `lib-psps` library provides a unified, type-safe interface for integrating with multiple Payment Service Providers (Stripe, Adyen, PayPal, etc.) while maintaining clean architecture and provider independence.
+The `library-psps` library provides a unified, type-safe interface for integrating with multiple Payment Service Providers (Stripe, Adyen, PayPal, etc.) while maintaining clean architecture and provider independence.
 
 ### Key Features
 
@@ -63,7 +63,7 @@ Before using this library, ensure you have:
 ```xml
 <dependency>
     <groupId>com.firefly</groupId>
-    <artifactId>lib-psps</artifactId>
+    <artifactId>library-psps</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
 ```
@@ -228,7 +228,7 @@ Type-safe value objects for payment operations:
 
 To add a new PSP implementation:
 
-1. Create a new module (e.g., `lib-psps-stripe-impl`)
+1. Create a new module (e.g., `library-psps-stripe-impl`)
 2. Implement the 9 port interfaces (~800 lines of PSP-specific logic)
 3. Extend `AbstractPspService` (~5 lines)
 4. Extend the 5 abstract controllers (~15 lines total)
@@ -286,7 +286,7 @@ See **[Implementation Pattern](IMPLEMENTATION_PATTERN.md)** for the complete gui
 
 ## Technical Details
 
-- **Artifact**: `lib-psps`
+- **Artifact**: `library-psps`
 - **Java**: 21
 - **Framework**: Spring Boot 3.x + WebFlux
 - **Architecture**: Hexagonal (Ports & Adapters)
@@ -343,7 +343,7 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 
 ### Q: How do I migrate from direct PSP integration?
 **A:** Follow these steps:
-1. Add lib-psps dependency
+1. Add library-psps dependency
 2. Create adapter implementation for your current PSP
 3. Replace direct API calls with port method calls
 4. Test thoroughly in staging
@@ -372,7 +372,7 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 **Solution**: Check your `failure-rate-threshold` and `minimum-number-of-calls` configuration. Default is 50% after 10 calls.
 
 **Problem**: "No qualifying bean of type 'PspAdapter'"  
-**Solution**: Ensure you have a PSP implementation dependency (e.g., `lib-psps-stripe-impl`) in your runtime classpath.
+**Solution**: Ensure you have a PSP implementation dependency (e.g., `library-psps-stripe-impl`) in your runtime classpath.
 
 **Problem**: Mono/Flux never completes  
 **Solution**: 

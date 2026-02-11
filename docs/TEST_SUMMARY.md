@@ -1,4 +1,4 @@
-# lib-psps Test Summary & Verification Report
+# library-psps Test Summary & Verification Report
 
 **Date:** 2025-10-27  
 **Version:** 1.0.0-SNAPSHOT  
@@ -228,7 +228,7 @@ firefly.psp.resilience:
 
 ## Conclusion
 
-The `lib-psps` library is **production-ready** with:
+The `library-psps` library is **production-ready** with:
 - ✅ 100% test pass rate (69/69 tests)
 - ✅ Complete documentation aligned with implementation
 - ✅ Enterprise-grade resilience patterns

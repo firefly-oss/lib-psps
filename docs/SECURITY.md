@@ -1,6 +1,6 @@
 # Security Best Practices
 
-This guide provides security recommendations when using the `lib-psps` library for payment processing.
+This guide provides security recommendations when using the `library-psps` library for payment processing.
 
 ---
 

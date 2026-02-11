@@ -2,13 +2,13 @@
 
 ## Overview
 
-`lib-psps` is an **enterprise-grade Payment Service Provider abstraction library** built on hexagonal architecture principles. It provides a unified, resilient, and compliant interface for integrating with multiple PSPs (Stripe, Adyen, PayPal, etc.) while maintaining production-readiness for financial services.
+`library-psps` is an **enterprise-grade Payment Service Provider abstraction library** built on hexagonal architecture principles. It provides a unified, resilient, and compliant interface for integrating with multiple PSPs (Stripe, Adyen, PayPal, etc.) while maintaining production-readiness for financial services.
 
 ---
 
 ## Architecture Layers
 
-### 1. **Core Domain Layer** (lib-psps)
+### 1. **Core Domain Layer** (library-psps)
 The heart of the library - PSP-agnostic business logic and contracts.
 
 ```
@@ -532,7 +532,7 @@ void shouldMatchStripeContract() {
 ## Migration Path
 
 ### Phase 1: Add Library (Week 1)
-1. Add `lib-psps` dependency
+1. Add `library-psps` dependency
 2. Configure resilience properties
 3. Enable metrics endpoint
 

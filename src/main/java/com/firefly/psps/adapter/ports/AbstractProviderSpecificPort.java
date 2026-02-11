@@ -32,7 +32,7 @@ import java.util.function.Function;
  * Abstract base implementation for provider-specific operations.
  * <p>
  * Provides a registry pattern for registering and executing provider-specific operations.
- * Similar to the DataEnrichers pattern in lib-common-data.
+ * Similar to the DataEnrichers pattern in library-common-data.
  * <p>
  * Example usage:
  * <pre>{@code

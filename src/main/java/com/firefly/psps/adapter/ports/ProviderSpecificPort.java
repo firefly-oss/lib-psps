@@ -28,7 +28,7 @@ import java.util.Set;
  * Port interface for provider-specific operations.
  * 
  * This allows implementations to expose PSP-specific features that don't fit
- * into the standard port interfaces, similar to DataEnrichers in lib-common-data.
+ * into the standard port interfaces, similar to DataEnrichers in library-common-data.
  * 
  * Examples:
  * - Stripe: Create Connect accounts, manage Radar rules
