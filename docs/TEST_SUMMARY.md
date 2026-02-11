@@ -207,7 +207,7 @@ firefly.psp.resilience:
 
 ## Known Limitations
 
-1. **Webhook Handling:** Managed by `common-platform-webhooks-mgmt` - not included in this library
+1. **Webhook Handling:** Managed by `core-common-webhooks-mgmt` - not included in this library
 2. **Provider Implementations:** Core library provides abstractions only - implementations (Stripe, Adyen, etc.) must be created separately
 3. **Database Integration:** Not included - applications must handle persistence
 

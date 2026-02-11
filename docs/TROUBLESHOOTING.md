@@ -408,7 +408,7 @@ curl https://api.stripe.com/v1/charges \
 
 **Cause**: Webhooks are NOT handled by this library
 
-**Solution**: Use `common-platform-webhooks-mgmt` for webhook handling:
+**Solution**: Use `core-common-webhooks-mgmt` for webhook handling:
 
 ```java
 // This library handles API calls:

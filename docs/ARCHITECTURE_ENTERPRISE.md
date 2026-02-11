@@ -27,7 +27,7 @@ The heart of the library - PSP-agnostic business logic and contracts.
 │  └── ReconciliationPort   - Settlement reconciliation       │
 │                                                              │
 │  Note: Webhook handling managed by                          │
-│        common-platform-webhooks-mgmt                        │
+│        core-common-webhooks-mgmt                        │
 │                                                              │
 │  10 DOMAIN MODELS                                           │
 │  ├── Money, Currency, PaymentStatus, PaymentMethodType      │
@@ -259,7 +259,7 @@ public interface ReconciliationPort {
 │  │  ├── reconciliation() → ReconciliationPort              │
 │  │  └── providerSpecific() → ProviderSpecificPort          │
 │  │                                                          │
-│  │  Note: Webhooks managed by common-platform-webhooks-mgmt│
+│  │  Note: Webhooks managed by core-common-webhooks-mgmt│
 │  └─────────────────────────────────────────────────────────┘  │
 │                                                                  │
 │  ┌─────────────────────────────────────────────────────────┐  │
@@ -556,7 +556,7 @@ void shouldMatchStripeContract() {
 
 ## Summary Statistics
 
-- **9 Port Interfaces** - Complete PSP operation coverage (Webhooks in common-platform-webhooks-mgmt)
+- **9 Port Interfaces** - Complete PSP operation coverage (Webhooks in core-common-webhooks-mgmt)
 - **9 Domain Models** - Type-safe value objects (Money, Currency, Address, CustomerInfo, PaymentStatus, PaymentMethodType, SubscriptionStatus, CheckoutMode, BillingInterval)
 - **41 DTOs** - Request/Response objects
 - **11 Exception Types** - Fine-grained error handling

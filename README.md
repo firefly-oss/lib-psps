@@ -116,7 +116,7 @@ The library defines 9 port interfaces representing all PSP operations:
 | **ReconciliationPort** | Settlement reconciliation | 5 |
 | **PspAdapter** | Main entry point | 9 ports |
 
-**Note:** Webhook handling is managed by `common-platform-webhooks-mgmt`.
+**Note:** Webhook handling is managed by `core-common-webhooks-mgmt`.
 
 ### Abstract Components
 
@@ -222,7 +222,7 @@ Type-safe value objects for payment operations:
 ✅ Reconciliation & settlement reports  
 ✅ Provider-specific features (extensible)  
 
-**Note:** Webhook handling is managed by `common-platform-webhooks-mgmt`.
+**Note:** Webhook handling is managed by `core-common-webhooks-mgmt`.
 
 ## Implementation
 
@@ -314,7 +314,7 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 ## Frequently Asked Questions
 
 ### Q: How do I handle webhooks?
-**A:** Webhook handling is intentionally separated and managed by `common-platform-webhooks-mgmt`. This provides:
+**A:** Webhook handling is intentionally separated and managed by `core-common-webhooks-mgmt`. This provides:
 - Centralized webhook management
 - Signature verification
 - Replay attack protection
@@ -389,7 +389,7 @@ Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for detai
 - Ensure keys are properly configured in application properties
 
 **Problem**: Payments succeed but webhooks don't arrive  
-**Solution**: Remember, webhooks are handled by `common-platform-webhooks-mgmt`, not this library.
+**Solution**: Remember, webhooks are handled by `core-common-webhooks-mgmt`, not this library.
 
 ## Support
 
