@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Firefly Software Solutions Inc
+ * Copyright 2025 Firefly Software Foundation
  */
 
 package com.firefly.psps.architecture;
